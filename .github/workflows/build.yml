@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
       - uses: ilammy/msvc-dev-cmd@v1
       - uses: ilammy/setup-nasm@v1.2.1
       - name: Update binaries
@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "alexhultman@gmail.com"
           git config --global user.name "Alex Hultman"
           git commit -a -m "[GitHub Actions] Updated windows-latest binaries"
-          git push binaries
+          git push origin binaries
           git checkout master -- tests/smoke.js
           npm install ws
           node tests/smoke.js
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
       - name: Update binaries
         run: |
           uname -a
@@ -57,7 +57,7 @@ jobs:
           git config --global user.email "alexhultman@gmail.com"
           git config --global user.name "Alex Hultman"
           git commit -a -m "[GitHub Actions] Updated ${{ matrix.os }} binaries" || true
-          git push binaries
+          git push origin binaries
           git checkout master -- tests/smoke.js
           npm install ws
           node tests/smoke.js
@@ -72,7 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
       - uses: uraimo/run-on-arch-action@v2.8.1
         name: Compile binaries
         with:
@@ -99,4 +99,4 @@ jobs:
           git config --global user.name "Alex Hultman"
           git add *.node *.js
           git commit -a -m "[GitHub Actions] Updated linux-${{ matrix.arch }} binaries" || true
-          git push binaries
+          git push origin binaries
