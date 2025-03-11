@@ -92,20 +92,20 @@ void build_boringssl(const char *arch) {
 #ifdef IS_MACOS
     /* Only macOS uses cross-compilation */
     if (arch == X64) {
-        run("cd uWebSockets/uSockets/boringssl && mkdir -p x64 && cd x64 && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=x86_64 .. && make crypto ssl");
+        run("cd uWebSockets/uSockets/boringssl && mkdir -p x64 && cd x64 && cmake -DCMAKE_BUILD_TYPE=Release -DFIPS=1 -DCMAKE_OSX_ARCHITECTURES=x86_64 .. && make crypto ssl");
     } else if (arch == ARM64) {
-        run("cd uWebSockets/uSockets/boringssl && mkdir -p arm64 && cd arm64 && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64 .. && make crypto ssl");
+        run("cd uWebSockets/uSockets/boringssl && mkdir -p arm64 && cd arm64 && cmake -DCMAKE_BUILD_TYPE=Release -DFIPS=1 -DCMAKE_OSX_ARCHITECTURES=arm64 .. && make crypto ssl");
     }
 #endif
     
 #ifdef IS_LINUX
     /* Build for x64 or arm/arm64 (depending on the host) */
-    run("cd uWebSockets/uSockets/boringssl && mkdir -p %s && cd %s && cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DCMAKE_BUILD_TYPE=Release .. && make crypto ssl", arch, arch);
+    run("cd uWebSockets/uSockets/boringssl && mkdir -p %s && cd %s && cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DFIPS=1 -DCMAKE_BUILD_TYPE=Release .. && make crypto ssl", arch, arch);
 #endif
     
 #ifdef IS_WINDOWS
     /* Build for x64 (the host) */
-    run("cd uWebSockets/uSockets/boringssl && mkdir -p x64 && cd x64 && cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release -GNinja .. && ninja crypto ssl");
+    run("cd uWebSockets/uSockets/boringssl && mkdir -p x64 && cd x64 && cmake -DCMAKE_C_COMPILER=clang -DFIPS=1 -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release -GNinja .. && ninja crypto ssl");
 #endif
 
 }
