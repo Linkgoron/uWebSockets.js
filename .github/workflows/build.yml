@@ -19,7 +19,6 @@ jobs:
       - name: Update binaries
         run: |
           $ErrorActionPreference = 'SilentlyContinue'
-          cd uWebSockets.js
           nmake
           git fetch origin binaries:binaries
           git checkout binaries
@@ -47,7 +46,6 @@ jobs:
           sudo apt update || true
           brew install go || true
           sudo apt install -y g++-aarch64-linux-gnu || true
-          cd uWebSockets.js
           make
           git fetch origin binaries:binaries
           git checkout binaries
@@ -90,7 +88,6 @@ jobs:
             make
       - name: Update binaries
         run: |
-          cd uWebSockets.js
           git fetch origin binaries:binaries
           git checkout binaries
           cp dist/*.node .
